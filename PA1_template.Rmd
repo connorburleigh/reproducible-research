@@ -34,5 +34,6 @@ INTERVAL<-aggregate(noNA$steps, by=(list(noNA$interval)), FUN="mean")
 plot(INTERVAL,type="l",ylab="Steps",xlab="Minutes")
 colnames(INTERVAL)<-(c("Interval","Mean"))
 Maxline<-INTERVAL[which(INTERVAL$Mean==max(INTERVAL$Mean)),]
+print(Maxline)
 ```
 
