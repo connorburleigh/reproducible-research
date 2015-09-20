@@ -1,0 +1,38 @@
+---
+title: "PA1_template"
+author: "Connor Burleigh"
+date: "September 20, 2015"
+output: html_document
+---
+
+## Template for Assignment 1 in Reproducible Reserach
+
+### "Reading and transfomring the Data"
+```{r, echo=TRUE}
+activity<-read.csv("/Users/connorburleigh/Coursera/activity.csv")
+library(lubridate)
+activity$date<-ymd(activity$date)
+timedate<-ymd_hms(activity$date + dminutes(activity$interval))
+activity<-cbind(activity,timedate)
+```
+
+#Question 1
+## Calculate and plot the total, mean and median number of steps taken.
+
+```{r, echo=TRUE}
+noNA<-na.omit(activity)
+STEPS<-aggregate(noNA$steps, by=(list(noNA$date)), FUN="sum")
+plot(STEPS,type="h",ylab="Steps",xlab="Date")
+print(mean(STEPS$x))
+print(median(STEPS$x))
+```
+
+#Question 2
+## Plot the average daily activity
+```{r}
+INTERVAL<-aggregate(noNA$steps, by=(list(noNA$interval)), FUN="mean")
+plot(INTERVAL,type="l",ylab="Steps",xlab="Minutes")
+colnames(INTERVAL)<-(c("Interval","Mean"))
+Maxline<-INTERVAL[which(INTERVAL$Mean==max(INTERVAL$Mean)),]
+```
+
