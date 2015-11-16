@@ -37,3 +37,24 @@ Maxline<-INTERVAL[which(INTERVAL$Mean==max(INTERVAL$Mean)),]
 print(Maxline)
 ```
 
+#Question 3
+##Inputting Missing Values
+```{r}
+print(sum(is.na(activity$steps)))
+Activity2<-activity
+Activity2$steps[which(is.na(Activity2$steps))]<-mean(Activity2$steps, na.rm=TRUE)
+STEPS2<-aggregate(Activity2$steps, by=(list(Activity2$date)), FUN="sum")
+plot(STEPS2,type="h",ylab="Steps",xlab="Date")
+print(mean(STEPS2$x))
+print(median(STEPS2$x))
+```
+
+#Question 4
+## Adding Weekends
+### Didnt have time to finish
+```{r}
+DayOfTheWeek<-as.factor(weekdays(Activity2$date))
+Activity3<-cbind(Activity2,DayOfTheWeek)
+plot(Activity3$steps,Activity3$DayOfTheWeek, type="l")
+
+```
