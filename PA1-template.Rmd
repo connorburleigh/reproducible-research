@@ -14,7 +14,7 @@ library(lubridate)
 ##Introduction
 The data being analyzed is a the number of footsteps taken by an individual collected at 5 minute intervals over the course of October and November, 2012. 
 
-```{r }
+```{r read}
 activity_data<-read.csv("activity.csv")
 summary(activity_data)
 ```
@@ -22,20 +22,22 @@ summary(activity_data)
 ##Extracting Daily Total
 The data is classified by date, using which we can extract the daily totals and summary stats and daily means and medians, and then providing a histogram.
 
-```{r }
+```{r totals}
 dates<-activity_data[,2]
 daily_totals<-as.vector((by(activity_data$steps,dates,sum)))
 hist(daily_totals,main="Daily Steps",xlab="Steps",col="grey",border="black",breaks = seq(from=0,to=25000,by=1000))
 
 clean_daily_totals<-(daily_totals[!is.na(daily_totals)])
+## Median
 median(clean_daily_totals)
+## Mean
 mean(clean_daily_totals)
 
 ```
 
 
 ##Removing NAs and Creating a Time Series
-```{r }
+```{r timeseries}
 no_nas<-activity_data[-which(is.na(activity_data$steps)),]
 interval_averages<-as.vector(by(no_nas$steps,no_nas$interval,mean))
 
@@ -58,13 +60,15 @@ clean_activity_data$steps[is.na(clean_activity_data$steps)]<-clean_activity_data
 adjusted_daily_totals<-as.vector(by(clean_activity_data$steps,dates,sum))
 hist(adjusted_daily_totals,main="Adjusted Daily Steps",xlab="Steps",col="grey",border="black",breaks = seq(from=0,to=25000,by=1000))
 
+## Median
 median(adjusted_daily_totals)
+## Mean
 mean(adjusted_daily_totals)
 
 ```
 
 ##Weekdays vs Weekends
-```{r }
+```{r weekends}
 day<-as.factor(weekdays(as.POSIXct.Date(clean_activity_data$date)))
 clean_activity_data2<-cbind(clean_activity_data,day)
 Day_Index<-c("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday")
