@@ -2,7 +2,9 @@
 title: "Markdown Take 3"
 author: "Connor burleigh"
 date: "April 30, 2018"
-output: html_document
+output: 
+  md_document:
+  variant: markdown_github
 ---
 
 ```{r setup, include=FALSE}
